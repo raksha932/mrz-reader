@@ -1,0 +1,15 @@
+.gradle/
+build/
+out/
+*.class
+
+mrtd-core/build/
+mrtd-api/build/
+target/
+mrtd-core/target/
+mrtd-api/target/
+
+tools/benchmark-dataset/out/
+tools/accuracy-harness/out/
+benchmark-dataset/generated/
+benchmark-dataset/reports/

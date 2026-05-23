@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://certipass.local/schemas/mrtd-benchmark-manifest.json",
+  "title": "MRTD Benchmark Dataset Manifest",
+  "type": "object",
+  "required": ["dataset_version", "generator", "seed", "case_count", "cases"],
+  "properties": {
+    "dataset_version": { "type": "string" },
+    "generator": { "type": "string" },
+    "seed": { "type": "integer" },
+    "case_count": { "type": "integer", "minimum": 1 },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "image_path",
+          "content_type",
+          "format",
+          "scenario",
+          "expected_outcome",
+          "ground_truth"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "image_path": { "type": "string" },
+          "content_type": { "type": "string", "const": "image/png" },
+          "format": { "type": "string", "enum": ["TD1", "TD2", "TD3", "MRV"] },
+          "scenario": { "type": "string" },
+          "expected_outcome": {
+            "type": "object",
+            "required": ["kind"],
+            "properties": {
+              "kind": { "type": "string", "enum": ["VALID_MRZ", "LOW_QUALITY", "UNSUPPORTED_FORMAT"] },
+              "error_code": { "type": "string" }
+            }
+          },
+          "ground_truth": {
+            "type": "object",
+            "required": ["mrz_lines"],
+            "properties": {
+              "mrz_lines": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 2,
+                "maxItems": 3
+              },
+              "document_type": { "type": "string" },
+              "document_number": { "type": "string" },
+              "issuing_state": { "type": "string" },
+              "nationality": { "type": "string" },
+              "surname": { "type": "string" },
+              "given_names": { "type": "string" },
+              "expired": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

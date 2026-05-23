@@ -1,0 +1,9 @@
+services:
+  mrtd-api:
+    environment:
+      API_AUTH_KEYS_1_ID: smoke-rate
+      API_AUTH_KEYS_1_VALUE: smoke-rate-key
+      API_AUTH_KEYS_1_TIER: strict
+      API_RATE_LIMIT_TIERS_STRICT_CAPACITY: 1
+      API_RATE_LIMIT_TIERS_STRICT_REFILL_TOKENS: 1
+      API_RATE_LIMIT_TIERS_STRICT_REFILL_PERIOD: 1h

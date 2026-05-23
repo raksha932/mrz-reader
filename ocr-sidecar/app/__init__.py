@@ -1,0 +1,1 @@
+"""MRZ OCR sidecar package."""

@@ -1,0 +1,9 @@
+[project]
+name = "mrtd-ocr-sidecar"
+version = "0.1.0"
+description = "FastAPI OCR sidecar for MRZ extraction"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

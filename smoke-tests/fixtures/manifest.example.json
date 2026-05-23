@@ -1,0 +1,63 @@
+{
+  "cases": [
+    {
+      "name": "clean TD3 passport",
+      "file": "td3-passport.png",
+      "content_type": "image/png",
+      "expected_status": 200,
+      "expected": {
+        "verdict": "VALID",
+        "identity_data.document_type": "PASSPORT",
+        "identity_data.document_number": "L898902C3"
+      }
+    },
+    {
+      "name": "clean TD1 identity card",
+      "file": "td1-id-card.png",
+      "content_type": "image/png",
+      "expected_status": 200,
+      "expected": {
+        "verdict": "VALID",
+        "raw_mrz.format": "TD1"
+      }
+    },
+    {
+      "name": "clean TD2 document",
+      "file": "td2-document.png",
+      "content_type": "image/png",
+      "expected_status": 200,
+      "expected": {
+        "verdict": "VALID",
+        "raw_mrz.format": "TD2"
+      }
+    },
+    {
+      "name": "blurry document",
+      "file": "blurry-document.png",
+      "content_type": "image/png",
+      "expected_status": 422,
+      "expected": {
+        "error.code": "IMAGE_QUALITY_LOW"
+      }
+    },
+    {
+      "name": "expired passport",
+      "file": "expired-passport.png",
+      "content_type": "image/png",
+      "expected_status": 200,
+      "expected": {
+        "verdict": "VALID_WITH_WARNINGS",
+        "identity_data.expired": true
+      }
+    },
+    {
+      "name": "visa document",
+      "file": "visa-document.png",
+      "content_type": "image/png",
+      "expected_status": 422,
+      "expected": {
+        "error.code": "UNSUPPORTED_FORMAT"
+      }
+    }
+  ]
+}

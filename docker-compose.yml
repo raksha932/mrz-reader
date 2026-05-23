@@ -1,0 +1,42 @@
+services:
+  ocr-sidecar:
+    build:
+      context: ./ocr-sidecar
+    image: certipass/ocr-sidecar:local
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=2).read()"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+
+  mrtd-api:
+    build:
+      context: .
+      dockerfile: mrtd-api/Dockerfile
+    image: certipass/mrtd-api:local
+    depends_on:
+      ocr-sidecar:
+        condition: service_healthy
+    environment:
+      OCR_SIDECAR_EXTRACT_URL: http://ocr-sidecar:8001/ocr/extract
+      OCR_SIDECAR_HEALTH_URL: http://ocr-sidecar:8001/health
+      API_AUTH_KEYS_0_ID: local-dev
+      API_AUTH_KEYS_0_VALUE: dev-api-key
+      API_AUTH_KEYS_0_TIER: default
+      API_AUTH_KEYS_1_ID: benchmark
+      API_AUTH_KEYS_1_VALUE: benchmark-api-key
+      API_AUTH_KEYS_1_TIER: benchmark
+      API_RATE_LIMIT_TIERS_BENCHMARK_CAPACITY: 10000
+      API_RATE_LIMIT_TIERS_BENCHMARK_REFILL_TOKENS: 10000
+      API_RATE_LIMIT_TIERS_BENCHMARK_REFILL_PERIOD: 1m
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/actuator/health/readiness"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s

@@ -1,0 +1,1 @@
+This is not an image. It is used by Docker Compose smoke tests to verify upload validation.
