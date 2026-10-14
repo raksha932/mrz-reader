@@ -13,3 +13,4 @@ tools/benchmark-dataset/out/
 tools/accuracy-harness/out/
 benchmark-dataset/generated/
 benchmark-dataset/reports/
+.env
